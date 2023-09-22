@@ -1,26 +1,28 @@
 const bodySchema = z.object({
+  name: z.string().min(3).max(20),
   email: z.string().email(),
   password: z.string().min(8).max(20),
 });
 
 export default eventHandler(async (event) => {
+  const {
+    email,
+    password: purePassword,
+    name,
+  } = await readValidatedBody(event, bodySchema.parse);
   const { secret } = useRuntimeConfig();
-  const { email, password: purePassword } = await readValidatedBody(
-    event,
-    bodySchema.parse
-  );
   const password = passwordHash(purePassword);
-  const user = new ModelUser({ email, password });
-  const result = await user.collection.findOne({ email, password });
-  if (result === null) {
-    setResponseStatus(event, 403);
+  const oldUser = new ModelUser();
+  const userExist = await oldUser.collection.findOne({ email, password });
+  if (userExist !== null) {
+    setResponseStatus(event, 409);
     return {
-      error: "Wront password or email!",
+      error: "User already exists!",
     };
   }
-  const userId = result._id.toString();
-  const oldRefreshToken = new ModelToken();
-  oldRefreshToken.collection.deleteMany({ userId });
+  const user = new ModelUser({ email, password, name });
+  const userSaved = await user.save();
+  const userId = userSaved._id.toString();
   const token = issueRefreshToken();
   const timestamp = Date.now();
   const refreshToken = new ModelToken({ userId, token, timestamp });
@@ -33,14 +35,12 @@ export default eventHandler(async (event) => {
     expires: expiresRefreshToken,
   });
 
-  const accessToken = issueAccessToken(
-    { userId, email, name: result.name },
-    { secret }
-  );
+  const accessToken = issueAccessToken({ userId, email, name }, { secret });
 
   setCookie(event, "accessToken", accessToken, {
     httpOnly: true,
     expires: expiresAccessToken,
   });
-  return { email, password };
+
+  return userSaved;
 });

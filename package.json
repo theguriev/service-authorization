@@ -7,12 +7,14 @@
     "preview": "node .output/server/index.mjs"
   },
   "devDependencies": {
-    "@types/jsonwebtoken": "^9.0.3"
+    "@types/jsonwebtoken": "^9.0.3",
+    "@types/uuid": "^9.0.4"
   },
   "dependencies": {
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.5.2",
     "nitropack": "latest",
+    "uuid": "^9.0.1",
     "zod": "^3.22.2"
   }
 }

@@ -6,11 +6,18 @@ export default async () =>
   defineNitroConfig({
     runtimeConfig: {
       mongoUri: "mongodb://root:example@localhost:27017/",
+      secret: "secret",
     },
     imports: {
       imports: [
         ...(await importsHelper("./db/model")),
         ...(await importsHelper("./db/schema", camelCase)),
+      ],
+      presets: [
+        {
+          from: "zod",
+          imports: ["z"],
+        },
       ],
     },
   });
