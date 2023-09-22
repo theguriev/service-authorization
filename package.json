@@ -6,7 +6,11 @@
     "build": "nitropack build",
     "preview": "node .output/server/index.mjs"
   },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.3"
+  },
   "dependencies": {
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.5.2",
     "nitropack": "latest",
     "zod": "^3.22.2"

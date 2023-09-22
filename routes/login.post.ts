@@ -1,6 +1,4 @@
 import { z } from "zod";
-import User from "@packages/db/models/user";
-import passwordHash from "@packages/utils/passwordHash";
 
 const bodySchema = z.object({
   email: z.string().email(),
@@ -13,7 +11,7 @@ export default eventHandler(async (event) => {
     bodySchema.parse
   );
   const password = passwordHash(purePassword);
-  const user = new User({ email, password });
+  const user = new ModelUser({ email, password });
   console.log("pass", email, password);
   const result = await user.collection.findOne({ email, password });
   if (result === null) {
