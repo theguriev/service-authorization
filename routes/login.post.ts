@@ -1,4 +1,4 @@
-const bodySchema = z.object({
+const requestBodySchema = z.object({
   email: z.string().email(),
   password: z.string().min(8).max(20),
 });
@@ -6,7 +6,7 @@ const bodySchema = z.object({
 export default eventHandler(async (event) => {
   const { email, password: purePassword } = await readValidatedBody(
     event,
-    bodySchema.parse
+    requestBodySchema.parse
   );
   const password = passwordHash(purePassword);
   const userDocument = new ModelUser({ email, password });

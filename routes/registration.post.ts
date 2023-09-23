@@ -1,4 +1,4 @@
-const bodySchema = z.object({
+const requestBodySchema = z.object({
   name: z.string().min(3).max(20),
   email: z.string().email(),
   password: z.string().min(8).max(20),
@@ -9,7 +9,7 @@ export default eventHandler(async (event) => {
     email,
     password: purePassword,
     name,
-  } = await readValidatedBody(event, bodySchema.parse);
+  } = await readValidatedBody(event, requestBodySchema.parse);
   const password = passwordHash(purePassword);
   const userExist = await ModelUser.findOne({
     email,

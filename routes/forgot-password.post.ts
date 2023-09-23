@@ -1,10 +1,9 @@
+const requestBodySchema = z.object({
+  email: z.string().email(),
+});
+
 export default eventHandler(async (event) => {
-  const { email } = await readValidatedBody(
-    event,
-    z.object({
-      email: z.string().email(),
-    }).parse
-  );
+  const { email } = await readValidatedBody(event, requestBodySchema.parse);
   const user = await ModelUser.findOneAndUpdate(
     { email },
     {
