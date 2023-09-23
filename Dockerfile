@@ -16,5 +16,8 @@ RUN pnpm install
 # build app
 RUN pnpm run build
 
+# Expose a port that the application will listen on
+EXPOSE 3000
+
 # Define the command to run the app
 CMD [ "node", ".output/server/index.mjs" ]
