@@ -1,27 +1,17 @@
 export default eventHandler(async (event) => {
-  const { secret } = useRuntimeConfig();
-  const refreshToken = getCookie(event, "refreshToken");
-  const oldRefreshToken = new ModelToken();
+  const oldRefreshToken = getCookie(event, "refreshToken");
+  const oldRefreshTokenDocument = await ModelToken.findOne({
+    token: oldRefreshToken,
+  });
 
-  oldRefreshToken.collection.findOne({ token: refreshToken });
-  if (oldRefreshToken === null) {
+  if (oldRefreshTokenDocument === null) {
     setResponseStatus(event, 404);
     return {
       error: "Refresh token not found!",
     };
   }
-  const userId = oldRefreshToken.userId!;
-  const token = issueRefreshToken();
-  const timestamp = Date.now();
-  oldRefreshToken.collection.deleteOne({ token: refreshToken });
-  const newRefreshToken = new ModelToken({ userId, token, timestamp });
-  const refreshTokenSaved = await newRefreshToken.save();
-
-  const expiresRefreshToken = new Date(timestamp + 1000 * 60 * 60 * 24 * 30);
-  const expiresAccessToken = new Date(timestamp + 1000 * 60 * 15);
-
-  const oldUser = new ModelUser();
-  const user = await oldUser.collection.findOne({ id: userId });
+  const userId = oldRefreshTokenDocument.userId!;
+  const user = await ModelUser.findOne({ _id: userId });
   if (user === null) {
     setResponseStatus(event, 404);
     return {
@@ -29,20 +19,14 @@ export default eventHandler(async (event) => {
     };
   }
 
-  setCookie(event, "refreshToken", refreshTokenSaved.token!, {
-    httpOnly: true,
-    expires: expiresRefreshToken,
+  const { save, deleteByUserId } = useTokens({
+    event,
+    userId,
+    email: user.email!,
+    name: user.name!,
   });
-
-  const accessToken = issueAccessToken(
-    { userId, email: user.email, name: user.name },
-    { secret }
-  );
-
-  setCookie(event, "accessToken", accessToken, {
-    httpOnly: true,
-    expires: expiresAccessToken,
-  });
+  await deleteByUserId();
+  await save();
 
   return user;
 });

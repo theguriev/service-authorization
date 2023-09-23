@@ -19,5 +19,6 @@ export default async () =>
           imports: ["z"],
         },
       ],
+      dirs: ["./composables"],
     },
   });
