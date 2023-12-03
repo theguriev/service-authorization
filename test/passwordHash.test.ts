@@ -1,6 +1,3 @@
-import { describe, it, expect } from 'vitest'
-import passwordHash from './passwordHash'
-
 describe('passwordHash', () => {
   it('should hash the password using MD5 algorithm', () => {
     const password = 'myPassword123'

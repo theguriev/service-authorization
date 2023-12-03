@@ -1,9 +1,7 @@
 /* eslint-disable import/no-named-as-default-member */
 /* eslint-disable import/default */
-import { describe, it, expect } from 'vitest'
 
 import jwt, { JwtPayload } from 'jsonwebtoken'
-import issueAccessToken from './issueAccessToken'
 
 describe('issueAccessToken', () => {
   const secret = 'mySecretKey'
