@@ -6,11 +6,14 @@
     "build": "nitropack build",
     "preview": "node .output/server/index.mjs",
     "lint": "eslint --cache --ext .ts,.mjs,.cjs . && prettier -c src test",
-    "lint:fix": "eslint --cache --fix --ext .ts,.mjs,.cjs . && prettier --write -c src test"
+    "lint:fix": "eslint --cache --fix --ext .ts,.mjs,.cjs . && prettier --write -c src test",
+    "vitest-es": "NODE_OPTIONS=\"--enable-source-maps --experimental-vm-modules\" vitest",
+    "test": "vitest-es"
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.3",
-    "@types/uuid": "^9.0.4"
+    "@types/uuid": "^9.0.4",
+    "vitest": "^1.0.0-beta.6"
   },
   "dependencies": {
     "@nuxtjs/eslint-config-typescript": "^12.1.0",
