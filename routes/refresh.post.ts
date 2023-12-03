@@ -1,32 +1,32 @@
 export default eventHandler(async (event) => {
-  const oldRefreshToken = getCookie(event, "refreshToken");
+  const oldRefreshToken = getCookie(event, 'refreshToken')
   const oldRefreshTokenDocument = await ModelToken.findOne({
-    token: oldRefreshToken,
-  });
+    token: oldRefreshToken
+  })
 
   if (oldRefreshTokenDocument === null) {
-    setResponseStatus(event, 404);
+    setResponseStatus(event, 404)
     return {
-      error: "Refresh token not found!",
-    };
+      error: 'Refresh token not found!'
+    }
   }
-  const userId = oldRefreshTokenDocument.userId!;
-  const user = await ModelUser.findOne({ _id: userId });
+  const userId = oldRefreshTokenDocument.userId!
+  const user = await ModelUser.findOne({ _id: userId })
   if (user === null) {
-    setResponseStatus(event, 404);
+    setResponseStatus(event, 404)
     return {
-      error: "User not found!",
-    };
+      error: 'User not found!'
+    }
   }
 
   const { save, deleteByUserId } = useTokens({
     event,
     userId,
     email: user.email!,
-    name: user.name!,
-  });
-  await deleteByUserId();
-  await save();
+    name: user.name!
+  })
+  await deleteByUserId()
+  await save()
 
-  return user;
-});
+  return user
+})

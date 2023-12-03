@@ -1,7 +1,7 @@
-import { connect } from "mongoose";
+import { connect } from 'mongoose'
 
-export default defineNitroPlugin(async (nitroApp) => {
-  const { mongoUri } = useRuntimeConfig();
-  await connect(mongoUri);
-  console.info("Connected to MongoDB 🚀", mongoUri);
-});
+export default defineNitroPlugin(async () => {
+  const { mongoUri } = useRuntimeConfig()
+  await connect(mongoUri)
+  console.info('Connected to MongoDB 🚀', mongoUri)
+})

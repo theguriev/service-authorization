@@ -1,11 +1,12 @@
-import jwt from "jsonwebtoken";
+/* eslint-disable import/default */
+import jwt from 'jsonwebtoken'
 
 const issueAccessToken = (
   payload: jwt.JwtPayload,
-  { secret, expiresIn = "15m" }: { secret: string; expiresIn?: string }
+  { secret, expiresIn = '15m' }: { secret: string; expiresIn?: string }
 ) =>
   jwt.sign(payload, secret, {
-    expiresIn,
-  });
+    expiresIn
+  })
 
-export default issueAccessToken;
+export default issueAccessToken

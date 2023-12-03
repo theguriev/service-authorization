@@ -1,9 +1,9 @@
-import { Schema } from "mongoose";
+import { Schema } from 'mongoose'
 
 const schema = new Schema({
   token: String,
   timestamp: Number,
-  userId: String,
-});
+  userId: String
+})
 
-export default schema;
+export default schema

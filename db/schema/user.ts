@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { Schema } from 'mongoose'
 
 const userSchema = new Schema({
   name: String,
@@ -6,8 +6,8 @@ const userSchema = new Schema({
   password: String,
   forgotPassword: {
     token: String,
-    timestamp: Number,
-  },
-});
+    timestamp: Number
+  }
+})
 
-export default userSchema;
+export default userSchema

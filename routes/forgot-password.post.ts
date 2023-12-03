@@ -1,22 +1,22 @@
 const requestBodySchema = z.object({
-  email: z.string().email(),
-});
+  email: z.string().email()
+})
 
 export default eventHandler(async (event) => {
-  const { email } = await readValidatedBody(event, requestBodySchema.parse);
+  const { email } = await readValidatedBody(event, requestBodySchema.parse)
   const user = await ModelUser.findOneAndUpdate(
     { email },
     {
       $set: {
-        forgotPassword: { token: issueRefreshToken(), timestamp: Date.now() },
-      },
+        forgotPassword: { token: issueRefreshToken(), timestamp: Date.now() }
+      }
     }
-  );
+  )
   if (user === null) {
-    setResponseStatus(event, 404);
+    setResponseStatus(event, 404)
     return {
-      error: "User not found!",
-    };
+      error: 'User not found!'
+    }
   }
-  return { ok: true };
-});
+  return { ok: true }
+})
