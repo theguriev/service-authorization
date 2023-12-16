@@ -1,12 +1,11 @@
-import { expect, it, describe } from 'vitest'
-import { setupTest } from '../../test-utils'
-
-describe('index', async () => {
-  const ctx = await setupTest('node')
-
+describe('index', () => {
   it('should render index', async () => {
-    const res: Response = await ctx.fetch('/')
-    expect(res.status).toBe(200)
-    expect(await res.json()).toMatchObject({ nitro: 'Is Awesome!' })
+    await $fetch('/', {
+      baseURL: 'http://localhost:3000',
+      onResponse: ({ response }) => {
+        expect(response.status).toBe(200)
+        expect(response._data).toMatchObject({ nitro: 'Is Awesome!' })
+      }
+    })
   })
 })
