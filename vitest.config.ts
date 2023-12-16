@@ -9,6 +9,8 @@ export default defineConfig({
         { name: 'describe', from: 'vitest' },
         { name: 'it', from: 'vitest' },
         { name: 'expect', from: 'vitest' },
+        { name: 'beforeAll', from: 'vitest' },
+        { name: 'afterAll', from: 'vitest' },
         { name: '$fetch', from: 'ofetch' }
       ],
       dirs: ['./utils'],
