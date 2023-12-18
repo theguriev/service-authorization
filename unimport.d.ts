@@ -5,8 +5,11 @@ declare global {
   const beforeAll: typeof import('vitest')['beforeAll']
   const describe: typeof import('vitest')['describe']
   const expect: typeof import('vitest')['expect']
+  const extractSetCookie: typeof import('/Users/eugen/work/service-authorization/utils/extractSetCookie')['default']
   const issueAccessToken: typeof import('/Users/eugen/work/service-authorization/utils/issueAccessToken')['default']
   const issueRefreshToken: typeof import('/Users/eugen/work/service-authorization/utils/issueRefreshToken')['default']
   const it: typeof import('vitest')['it']
+  const parse: typeof import('set-cookie-parser')['parse']
   const passwordHash: typeof import('/Users/eugen/work/service-authorization/utils/passwordHash')['default']
+  const uuidv4: typeof import('uuid')['v4']
 }

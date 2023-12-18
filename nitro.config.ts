@@ -11,7 +11,8 @@ export default async () =>
     imports: {
       imports: [
         ...(await importsHelper('./db/model')),
-        ...(await importsHelper('./db/schema', camelCase))
+        ...(await importsHelper('./db/schema', camelCase)),
+        { name: 'parse', from: 'set-cookie-parser' }
       ],
       presets: [
         {

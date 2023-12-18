@@ -11,7 +11,9 @@ export default defineConfig({
         { name: 'expect', from: 'vitest' },
         { name: 'beforeAll', from: 'vitest' },
         { name: 'afterAll', from: 'vitest' },
-        { name: '$fetch', from: 'ofetch' }
+        { name: '$fetch', from: 'ofetch' },
+        { name: 'v4', as: 'uuidv4', from: 'uuid' },
+        { name: 'parse', from: 'set-cookie-parser' }
       ],
       dirs: ['./utils'],
       dts: true
