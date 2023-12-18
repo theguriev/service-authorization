@@ -8,11 +8,12 @@
     "lint": "eslint --cache --ext .ts,.mjs,.cjs . && prettier -c src test",
     "lint:fix": "eslint --cache --fix --ext .ts,.mjs,.cjs . && prettier --write -c src test",
     "vitest-es": "NODE_OPTIONS=\"--enable-source-maps --experimental-vm-modules\" vitest",
-    "test": "pnpm run vitest-es"
+    "test": "pnpm run vitest-es --coverage"
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.5",
     "@types/uuid": "^9.0.7",
+    "@vitest/coverage-v8": "^1.0.4",
     "vitest": "^1.0.4"
   },
   "dependencies": {
