@@ -23,7 +23,7 @@ export default defineConfig({
     coverage: {
       reporter: ['text', 'clover', 'json']
     },
-    include: ['./test/**/*.test.ts'],
+    include: ['./test-api/*.test.ts'],
     globalSetup: './global-setup.ts'
   },
   resolve: {
