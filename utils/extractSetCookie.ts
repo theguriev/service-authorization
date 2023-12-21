@@ -1,4 +1,4 @@
-import { Cookie } from 'set-cookie-parser'
+import type { Cookie } from 'set-cookie-parser'
 
 const extractSetCookie = (headers: Headers) => {
   const setCookie: Array<Cookie> = []
