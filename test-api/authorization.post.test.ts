@@ -94,7 +94,7 @@ describe.only('Authorization', () => {
         method: 'POST',
         headers: {
           Accept: 'application/json',
-          Cookie: `refreshToken=${validRefreshToken.name}; Path=${validRefreshToken.path}; Expires=${validRefreshToken.expires}; ${validRefreshToken.httpOnly ? 'HttpOnly' : ''}`
+          Cookie: `refreshToken=${validRefreshToken.value}; Path=${validRefreshToken.path}; Expires=${validRefreshToken.expires}; ${validRefreshToken.httpOnly ? 'HttpOnly' : ''}`
         },
         onResponse: ({ response }) => {
           expect(response.status).toBe(200)
