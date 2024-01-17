@@ -6,6 +6,7 @@ describe.only('Authorization', () => {
   const email = `test+${uniqId}@test.com`
   const password = 'test1234'
   let validRefreshToken: Cookie
+  let validAccessToken: Cookie
 
   describe('POST /registration', () => {
     it('gets 200 on valid credentials', async () => {
@@ -68,6 +69,7 @@ describe.only('Authorization', () => {
           const refreshTokenObj = setCookie.find(cookie => cookie.name === 'refreshToken')
           const accessTokenObj = setCookie.find(cookie => cookie.name === 'accessToken')
           validRefreshToken = refreshTokenObj!
+          validAccessToken = accessTokenObj!
           expect(refreshTokenObj).toBeDefined()
           expect(accessTokenObj).toBeDefined()
         }
@@ -133,6 +135,43 @@ describe.only('Authorization', () => {
           expect(response._data).toMatchObject({ ok: true })
         }
       })
+    })
+  })
+
+  describe('GET /logout', () => {
+    it('gets 200 on valid logout', async () => {
+      await $fetch('/logout', {
+        baseURL: 'http://localhost:3000',
+        headers: {
+          Accept: 'application/json',
+          Cookie: `accessToken=${validAccessToken.value}; Path=${validAccessToken.path}; Expires=${validAccessToken.expires}; ${validAccessToken.httpOnly ? 'HttpOnly' : ''}`
+        },
+        onResponse: ({ response }) => {
+          expect(response.status).toBe(200)
+        }
+      })
+    })
+    it('gets 404 on invalid logout', async () => {
+      await $fetch('/logout', {
+        baseURL: 'http://localhost:3000',
+        headers: {
+          Accept: 'application/json'
+        },
+        ignoreResponseError: true,
+        onResponse: ({ response }) => {
+          expect(response.status).toBe(404)
+          expect(response._data).toMatchObject({ error: 'Access token not found!' })
+        }
+      })
+    })
+    it('gets 500 on invalid logout', async () => {
+      expect(async () => await $fetch('/logout', {
+        baseURL: 'http://localhost:3000',
+        headers: {
+          Accept: 'application/json',
+          Cookie: `accessToken=bullshit; Path=${validAccessToken.path}; Expires=${validAccessToken.expires}; ${validAccessToken.httpOnly ? 'HttpOnly' : ''}`
+        }
+      })).rejects.toThrow(/500 Internal Server Error/)
     })
   })
 })
