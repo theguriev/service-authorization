@@ -9,13 +9,26 @@ describe.only('Authorization', () => {
   let validAccessToken: Cookie
 
   describe('POST /registration', () => {
+    it('gets 400 on invalid credentials', async () => {
+      await $fetch('/registration', {
+        baseURL: 'http://localhost:3000',
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        ignoreResponseError: true,
+        body: { name, email, password, confirmation: 'bullshit' },
+        onResponse: ({ response }) => {
+          expect(response.status).toBe(400)
+          expect(response._data).toMatchObject({ error: 'Passwords do not match!' })
+        }
+      })
+    })
     it('gets 200 on valid credentials', async () => {
       await $fetch('/registration', {
         baseURL: 'http://localhost:3000',
         method: 'POST',
         ignoreResponseError: true,
         headers: { Accept: 'application/json' },
-        body: { name, email, password },
+        body: { name, email, password, confirmation: password },
         onResponse: ({ response }) => {
           expect(response.status).toBe(200)
           expect(response._data._id).toBeDefined()
@@ -33,7 +46,7 @@ describe.only('Authorization', () => {
         method: 'POST',
         headers: { Accept: 'application/json' },
         ignoreResponseError: true,
-        body: { name, email, password },
+        body: { name, email, password, confirmation: password },
         onResponse: ({ response }) => {
           expect(response.status).toBe(409)
           expect(response._data).toMatchObject({ error: 'User already exists!' })
