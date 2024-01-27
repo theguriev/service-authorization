@@ -77,6 +77,51 @@ describe.only('Authorization', () => {
     })
   })
 
+  describe('GET /', () => {
+    it('gets 404 on empty access token', async () => {
+      await $fetch('/', {
+        baseURL: 'http://localhost:3000',
+        headers: {
+          Accept: 'application/json'
+        },
+        ignoreResponseError: true,
+        onResponse: ({ response }) => {
+          expect(response.status).toBe(404)
+          expect(response._data).toMatchObject({ error: 'Access token not found!' })
+        }
+      })
+    })
+
+    it('gets 500 on empty access token', async () => {
+      await $fetch('/', {
+        baseURL: 'http://localhost:3000',
+        headers: {
+          Accept: 'application/json',
+          Cookie: `accessToken=invalid; Path=${validAccessToken.path}; Expires=${validAccessToken.expires}; ${validAccessToken.httpOnly ? 'HttpOnly' : ''}`
+        },
+        ignoreResponseError: true,
+        onResponse: ({ response }) => {
+          expect(response.status).toBe(500)
+          expect(response._data.message).toBe('jwt malformed')
+        }
+      })
+    })
+
+    it('gets valid user', async () => {
+      await $fetch('/', {
+        baseURL: 'http://localhost:3000',
+        headers: {
+          Accept: 'application/json',
+          Cookie: `accessToken=${validAccessToken.value}; Path=${validAccessToken.path}; Expires=${validAccessToken.expires}; ${validAccessToken.httpOnly ? 'HttpOnly' : ''}`
+        },
+        onResponse: ({ response }) => {
+          expect(response.status).toBe(200)
+          expect(response._data.email).toBe(email)
+        }
+      })
+    })
+  })
+
   describe('POST /refresh', () => {
     it('gets 404 on invalid refresh token', async () => {
       await $fetch('/refresh', {
