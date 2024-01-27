@@ -164,7 +164,7 @@ describe.only('Authorization', () => {
         }
       })
     })
-    it('gets 500 on invalid logout', async () => {
+    it('gets 500 on invalid logout', () => {
       expect(async () => await $fetch('/logout', {
         baseURL: 'http://localhost:3000',
         headers: {

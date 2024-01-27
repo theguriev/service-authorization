@@ -12,4 +12,5 @@ declare global {
   const parse: typeof import('set-cookie-parser')['parse']
   const passwordHash: typeof import('/Users/eugen/work/service-authorization/utils/passwordHash')['default']
   const uuidv4: typeof import('uuid')['v4']
+  const verify: typeof import('/Users/eugen/work/service-authorization/utils/verify')['default']
 }
