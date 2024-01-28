@@ -33,5 +33,5 @@ export default eventHandler(async (event) => {
   })
   save()
 
-  return userSaved
+  return userSaved.toJSON()
 })

@@ -13,7 +13,7 @@ export default eventHandler(async (event) => {
     throw createError({ message: 'User not found!', status: 404 })
   }
 
-  const { save, deleteByUserId, refreshToken, accessToken } = useTokens({
+  const { save, deleteByUserId } = useTokens({
     event,
     userId,
     email: user.email!,
@@ -22,9 +22,5 @@ export default eventHandler(async (event) => {
   await deleteByUserId()
   await save()
 
-  return {
-    ...user.toJSON(),
-    refreshToken,
-    accessToken
-  }
+  return user.toJSON()
 })
