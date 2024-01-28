@@ -149,11 +149,10 @@ describe.only('Authorization', () => {
     })
   })
 
-  describe('POST /refresh', () => {
+  describe('GET /refresh', () => {
     it('gets 404 on invalid refresh token', async () => {
       await $fetch('/refresh', {
         baseURL: 'http://localhost:3000',
-        method: 'POST',
         headers: { Accept: 'application/json' },
         ignoreResponseError: true,
         onResponse: ({ response }) => {
@@ -165,7 +164,6 @@ describe.only('Authorization', () => {
     it('gets 200 on valid refresh token2', async () => {
       await $fetch('/refresh', {
         baseURL: 'http://localhost:3000',
-        method: 'POST',
         headers: {
           Accept: 'application/json',
           Cookie: `refreshToken=${validRefreshToken.value}`
