@@ -13,20 +13,14 @@ export default eventHandler(async (event) => {
     confirmation
   } = await readValidatedBody(event, requestBodySchema.parse)
   if (purePassword !== confirmation) {
-    setResponseStatus(event, 400)
-    return {
-      error: 'Passwords do not match!'
-    }
+    throw createError({ message: 'Passwords do not match!', status: 400 })
   }
   const password = passwordHash(purePassword)
   const userExist = await ModelUser.findOne({
     $or: [{ email }, { name }]
   })
   if (userExist !== null) {
-    setResponseStatus(event, 409)
-    return {
-      error: 'User already exists!'
-    }
+    throw createError({ message: 'User already exists!', status: 409 })
   }
   const userDocument = new ModelUser({ email, password, name, timestamp: Date.now() })
   const userSaved = await userDocument.save()

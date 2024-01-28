@@ -13,10 +13,7 @@ export default eventHandler(async (event) => {
   const userRecord = await userDocument.collection.findOne({ email, password })
 
   if (userRecord === null) {
-    setResponseStatus(event, 403)
-    return {
-      error: 'Wront password or email!'
-    }
+    throw createError({ message: 'Wront password or email!', status: 403 })
   }
   const userId = userRecord._id.toString()
   const { deleteByUserId, save } = useTokens({

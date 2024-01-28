@@ -5,18 +5,12 @@ export default eventHandler(async (event) => {
   })
 
   if (oldRefreshTokenDocument === null) {
-    setResponseStatus(event, 404)
-    return {
-      error: 'Refresh token not found!'
-    }
+    throw createError({ message: 'Refresh token not found!', status: 404 })
   }
   const userId = oldRefreshTokenDocument.userId!
   const user = await ModelUser.findOne({ _id: userId })
   if (user === null) {
-    setResponseStatus(event, 404)
-    return {
-      error: 'User not found!'
-    }
+    throw createError({ message: 'User not found!', status: 404 })
   }
 
   const { save, deleteByUserId } = useTokens({

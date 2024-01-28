@@ -8,18 +8,12 @@ export default eventHandler(async (event) => {
         _id: userId
       })
       if (userExist === null) {
-        setResponseStatus(event, 409)
-        return {
-          error: 'User not exists!'
-        }
+        throw createError({ message: 'User not exists!', status: 409 })
       }
       return userExist
     } catch (error) {
       return error
     }
   }
-  setResponseStatus(event, 404)
-  return {
-    error: 'Access token not found!'
-  }
+  throw createError({ message: 'Access token not found!', status: 404 })
 })

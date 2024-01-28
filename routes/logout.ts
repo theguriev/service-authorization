@@ -10,8 +10,5 @@ export default eventHandler(async (event) => {
       return error
     }
   }
-  setResponseStatus(event, 404)
-  return {
-    error: 'Access token not found!'
-  }
+  throw createError({ message: 'Access token not found!', status: 404 })
 })

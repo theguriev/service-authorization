@@ -18,7 +18,7 @@ describe.only('Authorization', () => {
         body: { name, email, password, confirmation: 'bullshit' },
         onResponse: ({ response }) => {
           expect(response.status).toBe(400)
-          expect(response._data).toMatchObject({ error: 'Passwords do not match!' })
+          expect(response._data).toMatchObject({ message: 'Passwords do not match!' })
         }
       })
     })
@@ -49,7 +49,7 @@ describe.only('Authorization', () => {
         body: { name: 'randomname', email, password, confirmation: password },
         onResponse: ({ response }) => {
           expect(response.status).toBe(409)
-          expect(response._data).toMatchObject({ error: 'User already exists!' })
+          expect(response._data).toMatchObject({ message: 'User already exists!' })
         }
       })
     })
@@ -63,7 +63,7 @@ describe.only('Authorization', () => {
         body: { name, email: 'random@email.com', password, confirmation: password },
         onResponse: ({ response }) => {
           expect(response.status).toBe(409)
-          expect(response._data).toMatchObject({ error: 'User already exists!' })
+          expect(response._data).toMatchObject({ message: 'User already exists!' })
         }
       })
     })
@@ -79,7 +79,7 @@ describe.only('Authorization', () => {
         body: { email: 'wrong@email.com', password: 'test1234' },
         onResponse: ({ response }) => {
           expect(response.status).toBe(403)
-          expect(response._data).toMatchObject({ error: 'Wront password or email!' })
+          expect(response._data).toMatchObject({ message: 'Wront password or email!' })
         }
       })
     })
@@ -114,7 +114,7 @@ describe.only('Authorization', () => {
         ignoreResponseError: true,
         onResponse: ({ response }) => {
           expect(response.status).toBe(404)
-          expect(response._data).toMatchObject({ error: 'Access token not found!' })
+          expect(response._data).toMatchObject({ message: 'Access token not found!' })
         }
       })
     })
@@ -157,7 +157,7 @@ describe.only('Authorization', () => {
         ignoreResponseError: true,
         onResponse: ({ response }) => {
           expect(response.status).toBe(404)
-          expect(response._data).toMatchObject({ error: 'Refresh token not found!' })
+          expect(response._data).toMatchObject({ message: 'Refresh token not found!' })
         }
       })
     })
@@ -190,7 +190,7 @@ describe.only('Authorization', () => {
         body: { email: 'invalid@email.com' },
         onResponse: ({ response }) => {
           expect(response.status).toBe(404)
-          expect(response._data).toMatchObject({ error: 'User not found!' })
+          expect(response._data).toMatchObject({ message: 'User not found!' })
         }
       })
     })
@@ -230,7 +230,7 @@ describe.only('Authorization', () => {
         ignoreResponseError: true,
         onResponse: ({ response }) => {
           expect(response.status).toBe(404)
-          expect(response._data).toMatchObject({ error: 'Access token not found!' })
+          expect(response._data).toMatchObject({ message: 'Access token not found!' })
         }
       })
     })

@@ -13,10 +13,7 @@ export default eventHandler(async (event) => {
     }
   )
   if (user === null) {
-    setResponseStatus(event, 404)
-    return {
-      error: 'User not found!'
-    }
+    throw createError({ status: 404, message: 'User not found!' })
   }
   return { ok: true }
 })
