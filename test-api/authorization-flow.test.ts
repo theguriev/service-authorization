@@ -123,6 +123,42 @@ describe.only('Authorization', () => {
   })
 
   describe('POST /login', () => {
+    it('gets 400 on validation errors', async () => {
+      await $fetch('/login', {
+        baseURL: 'http://localhost:3000',
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        ignoreResponseError: true,
+        body: { email: '1', password: '2' },
+        onResponse: ({ response }) => {
+          expect(response.status).toBe(400)
+          expect(response._data).toMatchObject({
+            url: '/login',
+            statusCode: 400,
+            statusMessage: 'Validation Error',
+            message: 'Validation Error',
+            data: [
+              {
+                code: 'invalid_string',
+                message: 'Invalid email',
+                path: ['email'],
+                validation: 'email'
+              },
+              {
+                code: 'too_small',
+                exact: false,
+                inclusive: true,
+                message: 'String must contain at least 8 character(s)',
+                minimum: 8,
+                path: ['password'],
+                type: 'string'
+              }
+            ]
+          })
+        }
+      })
+    })
+
     it('gets 403 on invalid credentials', async () => {
       await $fetch('/login', {
         baseURL: 'http://localhost:3000',
@@ -234,6 +270,32 @@ describe.only('Authorization', () => {
   })
 
   describe('POST /forgot-password', () => {
+    it('gets 400 on validation errors', async () => {
+      await $fetch('/forgot-password', {
+        baseURL: 'http://localhost:3000',
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        ignoreResponseError: true,
+        body: { email: '1' },
+        onResponse: ({ response }) => {
+          expect(response.status).toBe(400)
+          expect(response._data).toMatchObject({
+            url: '/forgot-password',
+            statusCode: 400,
+            statusMessage: 'Validation Error',
+            message: 'Validation Error',
+            data: [
+              {
+                code: 'invalid_string',
+                message: 'Invalid email',
+                path: ['email'],
+                validation: 'email'
+              }
+            ]
+          })
+        }
+      })
+    })
     it('gets 404 on invalid email', async () => {
       await $fetch('/forgot-password', {
         baseURL: 'http://localhost:3000',
