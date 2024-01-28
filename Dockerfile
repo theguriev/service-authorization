@@ -1,5 +1,8 @@
 # Specify the base image
-FROM therealguriev/pnpm-node:16.20.1-alpine-4
+FROM node:21-alpine3.18
+
+# Install PNPM
+RUN npm install -g pnpm
 
 # Create app directory
 WORKDIR /app
