@@ -23,7 +23,7 @@ export default eventHandler(async (event) => {
   await save()
 
   return {
-    ...user,
+    ...user.toJSON(),
     refreshToken,
     accessToken
   }
