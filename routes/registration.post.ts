@@ -11,7 +11,7 @@ export default eventHandler(async (event) => {
     password: purePassword,
     name,
     confirmation
-  } = await readValidatedBody(event, requestBodySchema.parse)
+  } = await zodValidateBody(event, requestBodySchema.parse)
   if (purePassword !== confirmation) {
     throw createError({ message: 'Passwords do not match!', status: 400 })
   }

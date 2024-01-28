@@ -9,6 +9,59 @@ describe.only('Authorization', () => {
   let validAccessToken: Cookie
 
   describe('POST /registration', () => {
+    it('gets 400 on validation errors', async () => {
+      await $fetch('/registration', {
+        baseURL: 'http://localhost:3000',
+        method: 'POST',
+        ignoreResponseError: true,
+        headers: { Accept: 'application/json' },
+        body: { name: '1', email: '1', password: '1', confirmation: '2' },
+        onResponse: ({ response }) => {
+          expect(response.status).toBe(400)
+          expect(response._data).toMatchObject({
+            url: '/registration',
+            statusCode: 400,
+            statusMessage: 'Validation Error',
+            message: 'Validation Error',
+            data: [
+              {
+                code: 'too_small',
+                minimum: 3,
+                type: 'string',
+                inclusive: true,
+                exact: false,
+                message: 'String must contain at least 3 character(s)',
+                path: ['name']
+              },
+              {
+                validation: 'email',
+                code: 'invalid_string',
+                message: 'Invalid email',
+                path: ['email']
+              },
+              {
+                code: 'too_small',
+                minimum: 8,
+                type: 'string',
+                inclusive: true,
+                exact: false,
+                message: 'String must contain at least 8 character(s)',
+                path: ['password']
+              },
+              {
+                code: 'too_small',
+                minimum: 8,
+                type: 'string',
+                inclusive: true,
+                exact: false,
+                message: 'String must contain at least 8 character(s)',
+                path: ['confirmation']
+              }
+            ]
+          })
+        }
+      })
+    })
     it('gets 400 on invalid credentials', async () => {
       await $fetch('/registration', {
         baseURL: 'http://localhost:3000',

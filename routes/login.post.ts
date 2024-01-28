@@ -4,7 +4,7 @@ const requestBodySchema = z.object({
 })
 
 export default eventHandler(async (event) => {
-  const { email, password: purePassword } = await readValidatedBody(
+  const { email, password: purePassword } = await zodValidateBody(
     event,
     requestBodySchema.parse
   )

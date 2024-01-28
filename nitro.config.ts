@@ -4,6 +4,7 @@ import importsHelper from './importsHelper'
 // https://nitro.unjs.io/config
 export default async () =>
   defineNitroConfig({
+    errorHandler: '~/error',
     runtimeConfig: {
       mongoUri: 'mongodb://root:example@localhost:27017/',
       secret: 'secret'

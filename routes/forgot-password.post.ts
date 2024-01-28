@@ -3,7 +3,7 @@ const requestBodySchema = z.object({
 })
 
 export default eventHandler(async (event) => {
-  const { email } = await readValidatedBody(event, requestBodySchema.parse)
+  const { email } = await zodValidateBody(event, requestBodySchema.parse)
   const user = await ModelUser.findOneAndUpdate(
     { email },
     {

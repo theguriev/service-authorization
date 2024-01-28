@@ -13,4 +13,6 @@ declare global {
   const passwordHash: typeof import('/Users/eugen/work/service-authorization/utils/passwordHash')['default']
   const uuidv4: typeof import('uuid')['v4']
   const verify: typeof import('/Users/eugen/work/service-authorization/utils/verify')['default']
+  const zodValidateBody: typeof import('/Users/eugen/work/service-authorization/utils/zodValidateBody')['default']
+  const zodValidateData: typeof import('/Users/eugen/work/service-authorization/utils/zodValidateData')['default']
 }
