@@ -110,7 +110,7 @@ describe.only('Authorization', () => {
         baseURL: 'http://localhost:3000',
         headers: {
           Accept: 'application/json',
-          Cookie: `accessToken=invalid; Path=${validAccessToken.path}; Expires=${validAccessToken.expires}; ${validAccessToken.httpOnly ? 'HttpOnly' : ''}`
+          Cookie: 'accessToken=invalid;'
         },
         ignoreResponseError: true,
         onResponse: ({ response }) => {
@@ -125,7 +125,7 @@ describe.only('Authorization', () => {
         baseURL: 'http://localhost:3000',
         headers: {
           Accept: 'application/json',
-          Cookie: `accessToken=${validAccessToken.value}; Path=${validAccessToken.path}; Expires=${validAccessToken.expires}; ${validAccessToken.httpOnly ? 'HttpOnly' : ''}`
+          Cookie: `accessToken=${validAccessToken.value};`
         },
         onResponse: ({ response }) => {
           expect(response.status).toBe(200)
@@ -154,7 +154,7 @@ describe.only('Authorization', () => {
         method: 'POST',
         headers: {
           Accept: 'application/json',
-          Cookie: `refreshToken=${validRefreshToken.value}; Path=${validRefreshToken.path}; Expires=${validRefreshToken.expires}; ${validRefreshToken.httpOnly ? 'HttpOnly' : ''}`
+          Cookie: `refreshToken=${validRefreshToken.value}`
         },
         onResponse: ({ response }) => {
           expect(response.status).toBe(200)
@@ -202,7 +202,7 @@ describe.only('Authorization', () => {
         baseURL: 'http://localhost:3000',
         headers: {
           Accept: 'application/json',
-          Cookie: `accessToken=${validAccessToken.value}; Path=${validAccessToken.path}; Expires=${validAccessToken.expires}; ${validAccessToken.httpOnly ? 'HttpOnly' : ''}`
+          Cookie: `accessToken=${validAccessToken.value}`
         },
         onResponse: ({ response }) => {
           expect(response.status).toBe(200)
@@ -227,7 +227,7 @@ describe.only('Authorization', () => {
         baseURL: 'http://localhost:3000',
         headers: {
           Accept: 'application/json',
-          Cookie: `accessToken=bullshit; Path=${validAccessToken.path}; Expires=${validAccessToken.expires}; ${validAccessToken.httpOnly ? 'HttpOnly' : ''}`
+          Cookie: 'accessToken=bullshit'
         }
       })).rejects.toThrow(/500 Internal Server Error/)
     })
