@@ -40,13 +40,27 @@ describe.only('Authorization', () => {
         }
       })
     })
-    it('gets 409 on already registered user', async () => {
+    it('gets 409 on email already exist', async () => {
       await $fetch('/registration', {
         baseURL: 'http://localhost:3000',
         method: 'POST',
         headers: { Accept: 'application/json' },
         ignoreResponseError: true,
-        body: { name, email, password, confirmation: password },
+        body: { name: 'randomname', email, password, confirmation: password },
+        onResponse: ({ response }) => {
+          expect(response.status).toBe(409)
+          expect(response._data).toMatchObject({ error: 'User already exists!' })
+        }
+      })
+    })
+
+    it('gets 409 on name already exist', async () => {
+      await $fetch('/registration', {
+        baseURL: 'http://localhost:3000',
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        ignoreResponseError: true,
+        body: { name, email: 'random@email.com', password, confirmation: password },
         onResponse: ({ response }) => {
           expect(response.status).toBe(409)
           expect(response._data).toMatchObject({ error: 'User already exists!' })

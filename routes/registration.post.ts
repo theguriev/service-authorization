@@ -20,8 +20,7 @@ export default eventHandler(async (event) => {
   }
   const password = passwordHash(purePassword)
   const userExist = await ModelUser.findOne({
-    email,
-    password
+    $or: [{ email }, { name }]
   })
   if (userExist !== null) {
     setResponseStatus(event, 409)
