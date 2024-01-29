@@ -5,6 +5,8 @@ export default eventHandler(async (event) => {
     try {
       const { userId } = await verify(accessToken, secret)
       const refreshTokenDocument = new ModelToken()
+      deleteCookie(event, 'accessToken')
+      deleteCookie(event, 'refreshToken')
       return await refreshTokenDocument.collection.deleteMany({ userId })
     } catch (error) {
       return error

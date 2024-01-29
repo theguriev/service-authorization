@@ -333,6 +333,10 @@ describe.only('Authorization', () => {
         },
         onResponse: ({ response }) => {
           expect(response.status).toBe(200)
+          expect(response.headers.getSetCookie()).toMatchObject([
+            'accessToken=; Max-Age=0; Path=/',
+            'refreshToken=; Max-Age=0; Path=/'
+          ])
         }
       })
     })

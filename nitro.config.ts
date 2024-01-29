@@ -5,6 +5,9 @@ import importsHelper from './importsHelper'
 export default async () =>
   defineNitroConfig({
     errorHandler: '~/error',
+    experimental: {
+      openAPI: true
+    },
     runtimeConfig: {
       mongoUri: 'mongodb://root:example@localhost:27017/',
       secret: 'secret'
