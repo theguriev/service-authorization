@@ -56,6 +56,11 @@ describe.only('Authorization', () => {
                 exact: false,
                 message: 'String must contain at least 8 character(s)',
                 path: ['confirmation']
+              },
+              {
+                code: 'custom',
+                message: 'Passwords do not match!',
+                path: ['confirmation']
               }
             ]
           })
@@ -71,7 +76,19 @@ describe.only('Authorization', () => {
         body: { name, email, password, confirmation: 'bullshit' },
         onResponse: ({ response }) => {
           expect(response.status).toBe(400)
-          expect(response._data).toMatchObject({ message: 'Passwords do not match!' })
+          expect(response._data).toMatchObject({
+            url: '/registration',
+            statusCode: 400,
+            statusMessage: 'Validation Error',
+            message: 'Validation Error',
+            data: [
+              {
+                code: 'custom',
+                message: 'Passwords do not match!',
+                path: ['confirmation']
+              }
+            ]
+          })
         }
       })
     })

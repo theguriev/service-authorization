@@ -3,18 +3,20 @@ const requestBodySchema = z.object({
   email: z.string().email(),
   password: z.string().min(8).max(20),
   confirmation: z.string().min(8).max(20)
-})
+}).refine(
+  data => data.password === data.confirmation,
+  {
+    message: 'Passwords do not match!',
+    path: ['confirmation']
+  }
+)
 
 export default eventHandler(async (event) => {
   const {
     email,
     password: purePassword,
-    name,
-    confirmation
+    name
   } = await zodValidateBody(event, requestBodySchema.parse)
-  if (purePassword !== confirmation) {
-    throw createError({ message: 'Passwords do not match!', status: 400 })
-  }
   const password = passwordHash(purePassword)
   const userExist = await ModelUser.findOne({
     $or: [{ email }, { name }]
