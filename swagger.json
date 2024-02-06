@@ -1,0 +1,206 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Nitro Server Routes",
+      "version": null
+    },
+    "servers": [
+      {
+        "url": "http://localhost:3000",
+        "description": "Local Development Server",
+        "variables": {
+          
+        }
+      }
+    ],
+    "schemes": [
+      "http"
+    ],
+    "components": {
+      "schemas": {
+        "User": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "description": "The ID of the user."
+            },
+            "name": {
+              "type": "string",
+              "description": "The name of the user."
+            },
+            "email": {
+              "type": "string",
+              "format": "email",
+              "description": "The email address of the user."
+            },
+            "password": {
+              "type": "string",
+              "description": "The password of the user."
+            },
+            "timestamp": {
+              "type": "integer",
+              "format": "int64",
+              "description": "The timestamp indicating when the user was created or last updated."
+            },
+            "forgotPassword": {
+              "type": "object",
+              "description": "Information related to password reset.",
+              "properties": {
+                "token": {
+                  "type": "string",
+                  "description": "The token generated for password reset."
+                },
+                "timestamp": {
+                  "type": "integer",
+                  "format": "int64",
+                  "description": "The timestamp indicating when the password reset token was generated."
+                }
+              }
+            }
+          }
+        },
+        "Error": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "description": "A message describing the error."
+            },
+            "status": {
+              "type": "integer",
+              "description": "The HTTP status code of the error."
+            }
+          },
+          "required": ["message", "status"]
+        }
+      }
+    },
+    "paths": {
+      "/forgot-password": {
+        "post": {
+          "tags": [
+            "App Routes"
+          ],
+          "parameters": [
+            
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/": {
+        "get": {
+          "summary": "Check if User Exists",
+          "description": "This endpoint checks if a user exists based on the provided access token.",
+          "parameters": [
+            {
+              "name": "Cookie",
+              "in": "cookie",
+              "required": true,
+              "schema": {
+                "type": "string"
+              },
+              "example": "accessToken=your_access_token_here",
+              "description": "Access token cookie"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Me",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Access token not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "User not exists",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/login": {
+        "post": {
+          "tags": [
+            "App Routes"
+          ],
+          "parameters": [
+            
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/logout": {
+        "get": {
+          "tags": [
+            "App Routes"
+          ],
+          "parameters": [
+            
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/refresh": {
+        "get": {
+          "tags": [
+            "App Routes"
+          ],
+          "parameters": [
+            
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/registration": {
+        "post": {
+          "tags": [
+            "App Routes"
+          ],
+          "parameters": [
+            
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      }
+    }
+  }
