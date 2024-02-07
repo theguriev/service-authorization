@@ -60,6 +60,31 @@
             }
           }
         },
+        "RegisterUserRequest": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 20
+            },
+            "email": {
+              "type": "string",
+              "format": "email"
+            },
+            "password": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 20
+            },
+            "confirmation": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 20
+            }
+          },
+          "required": ["name", "email", "password", "confirmation"]
+        },
         "Error": {
           "type": "object",
           "properties": {
@@ -190,7 +215,7 @@
           }
         }
       },
-      "/refresh-token": {
+      "/refresh": {
         "post": {
           "summary": "Refresh Token Handler",
           "description": "Handler to refresh user token.",
@@ -232,15 +257,38 @@
       },
       "/registration": {
         "post": {
-          "tags": [
-            "App Routes"
-          ],
-          "parameters": [
-            
-          ],
+          "summary": "User Registration Handler",
+          "description": "Handler to register a new user.",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegisterUserRequest"
+                }
+              }
+            }
+          },
           "responses": {
             "200": {
-              "description": "OK"
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "User already exists",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
             }
           }
         }
