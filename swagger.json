@@ -146,6 +146,53 @@
             }
           },
           "required": ["message", "status"]
+        },
+        "ForgotValidationError": {
+          "type": "object",
+          "properties": {
+            "url": {
+              "type": "string",
+              "example": "/forgot-password"
+            },
+            "statusCode": {
+              "type": "integer",
+              "example": 400
+            },
+            "statusMessage": {
+              "type": "string",
+              "example": "Validation Error"
+            },
+            "message": {
+              "type": "string",
+              "example": "Validation Error"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "example": "invalid_string"
+                  },
+                  "message": {
+                    "type": "string",
+                    "example": "Invalid email"
+                  },
+                  "path": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "validation": {
+                    "type": "string",
+                    "example": "email"
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -171,6 +218,16 @@
                 "application/json": {
                   "schema": {
                     "$ref": "#/components/schemas/ForgotPasswordResponse"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Validation Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ForgotValidationError"
                   }
                 }
               }
