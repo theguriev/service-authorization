@@ -172,17 +172,42 @@
           }
         }
       },
-      "/refresh": {
-        "get": {
-          "tags": [
-            "App Routes"
-          ],
+      "/refresh-token": {
+        "post": {
+          "summary": "Refresh Token Handler",
+          "description": "Handler to refresh user token.",
           "parameters": [
-            
+            {
+              "name": "Cookie",
+              "in": "cookie",
+              "required": true,
+              "schema": {
+                "type": "string"
+              },
+              "example": "refreshToken=your_refresh_token_here",
+              "description": "Refresh token cookie"
+            }
           ],
           "responses": {
             "200": {
-              "description": "OK"
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Refresh token not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
             }
           }
         }
