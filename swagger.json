@@ -114,6 +114,25 @@
             }
           }
         },
+        "ForgotPasswordRequest": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string",
+              "format": "email"
+            }
+          },
+          "required": ["email"]
+        },
+        "ForgotPasswordResponse": {
+          "type": "object",
+          "properties": {
+            "ok": {
+              "type": "boolean",
+              "description": "Indicates if the password reset process was initiated successfully."
+            }
+          }
+        },
         "Error": {
           "type": "object",
           "properties": {
@@ -133,15 +152,38 @@
     "paths": {
       "/forgot-password": {
         "post": {
-          "tags": [
-            "App Routes"
-          ],
-          "parameters": [
-            
-          ],
+          "summary": "Forgot Password Handler",
+          "description": "Handler to initiate the password reset process for a user.",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForgotPasswordRequest"
+                }
+              }
+            }
+          },
           "responses": {
             "200": {
-              "description": "OK"
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ForgotPasswordResponse"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "User not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
             }
           }
         }
