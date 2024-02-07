@@ -159,15 +159,33 @@
       },
       "/logout": {
         "get": {
-          "tags": [
-            "App Routes"
-          ],
+          "summary": "Cleanup Tokens Handler",
+          "description": "Handler to cleanup tokens associated with an access token.",
           "parameters": [
-            
+            {
+              "name": "Cookie",
+              "in": "cookie",
+              "required": true,
+              "schema": {
+                "type": "string"
+              },
+              "example": "accessToken=your_access_token_here",
+              "description": "Access token cookie"
+            }
           ],
           "responses": {
             "200": {
-              "description": "OK"
+              "description": "Success"
+            },
+            "404": {
+              "description": "Access token not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
             }
           }
         }
