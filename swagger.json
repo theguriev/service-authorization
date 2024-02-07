@@ -85,6 +85,35 @@
           },
           "required": ["name", "email", "password", "confirmation"]
         },
+        "LoginRequest": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string",
+              "format": "email"
+            },
+            "password": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 20
+            }
+          },
+          "required": ["email", "password"]
+        },
+        "LoginResponse": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string",
+              "format": "email",
+              "description": "The email address of the logged-in user."
+            },
+            "password": {
+              "type": "string",
+              "description": "The hashed password of the logged-in user."
+            }
+          }
+        },
         "Error": {
           "type": "object",
           "properties": {
@@ -169,15 +198,38 @@
       },
       "/login": {
         "post": {
-          "tags": [
-            "App Routes"
-          ],
-          "parameters": [
-            
-          ],
+          "summary": "User Login Handler",
+          "description": "Handler to authenticate and log in a user.",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginRequest"
+                }
+              }
+            }
+          },
           "responses": {
             "200": {
-              "description": "OK"
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/LoginResponse"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Wrong password or email",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
             }
           }
         }
