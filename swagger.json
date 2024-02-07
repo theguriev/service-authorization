@@ -147,7 +147,7 @@
           },
           "required": ["message", "status"]
         },
-        "ForgotValidationError": {
+        "ValidationError": {
           "type": "object",
           "properties": {
             "url": {
@@ -227,7 +227,7 @@
               "content": {
                 "application/json": {
                   "schema": {
-                    "$ref": "#/components/schemas/ForgotValidationError"
+                    "$ref": "#/components/schemas/ValidationError"
                   }
                 }
               }
@@ -316,6 +316,16 @@
                 "application/json": {
                   "schema": {
                     "$ref": "#/components/schemas/LoginResponse"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Validation Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ValidationError"
                   }
                 }
               }
@@ -427,6 +437,16 @@
                 "application/json": {
                   "schema": {
                     "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Validation Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ValidationError"
                   }
                 }
               }
