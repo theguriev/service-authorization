@@ -251,7 +251,7 @@
           "description": "This endpoint checks if a user exists based on the provided access token.",
           "parameters": [
             {
-              "name": "Cookie",
+              "name": "accessToken",
               "in": "cookie",
               "required": true,
               "schema": {
@@ -349,7 +349,7 @@
           "description": "Handler to cleanup tokens associated with an access token.",
           "parameters": [
             {
-              "name": "Cookie",
+              "name": "accessToken",
               "in": "cookie",
               "required": true,
               "schema": {
@@ -382,7 +382,7 @@
           "description": "Handler to refresh user token.",
           "parameters": [
             {
-              "name": "Cookie",
+              "name": "refreshToken",
               "in": "cookie",
               "required": true,
               "schema": {
