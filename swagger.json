@@ -59,7 +59,7 @@
               }
             }
           },
-          "required": ["_id", "name", "email", "password", "timestamp", "forgotPassword"]
+          "required": ["_id", "name", "email", "password", "timestamp"]
         },
         "RegisterUserRequest": {
           "type": "object",
