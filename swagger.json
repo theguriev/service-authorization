@@ -58,7 +58,8 @@
                 }
               }
             }
-          }
+          },
+          "required": ["_id", "name", "email", "password", "timestamp", "forgotPassword"]
         },
         "RegisterUserRequest": {
           "type": "object",
@@ -112,7 +113,8 @@
               "type": "string",
               "description": "The hashed password of the logged-in user."
             }
-          }
+          },
+          "required": ["email", "password"]
         },
         "ForgotPasswordRequest": {
           "type": "object",
@@ -131,7 +133,8 @@
               "type": "boolean",
               "description": "Indicates if the password reset process was initiated successfully."
             }
-          }
+          },
+          "required": ["ok"]
         },
         "Error": {
           "type": "object",
