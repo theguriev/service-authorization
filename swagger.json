@@ -382,7 +382,7 @@
         }
       },
       "/refresh": {
-        "post": {
+        "get": {
           "summary": "Refresh Token Handler",
           "description": "Handler to refresh user token.",
           "parameters": [
