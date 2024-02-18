@@ -192,10 +192,12 @@
                     "type": "string",
                     "example": "email"
                   }
-                }
+                },
+                "required": ["path", "code", "message"]
               }
             }
-          }
+          },
+          "required": ["data", "message", "statusCode"]
         }
       }
     },
