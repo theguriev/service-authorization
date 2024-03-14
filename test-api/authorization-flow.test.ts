@@ -1,8 +1,9 @@
 import type { Cookie } from 'set-cookie-parser'
 
-describe.only('Authorization', () => {
+describe('Authorization', () => {
   const uniqId = uuidv4().split('-')[0]
   const name = `test${uniqId}`
+  const newName = `newtest${uniqId}`
   const email = `test+${uniqId}@test.com`
   const password = 'test1234'
   let validRefreshToken: Cookie
@@ -378,6 +379,39 @@ describe.only('Authorization', () => {
           Cookie: 'accessToken=bullshit'
         }
       })).rejects.toThrow(/500 Internal Server Error/)
+    })
+  })
+
+  describe('PUT /change-name', () => {
+    it('changes the user name', async () => {
+      const newName = 'NewName'
+      await $fetch('/change-name', {
+        baseURL: 'http://localhost:3000',
+        method: 'PUT',
+        headers: {
+          Accept: 'application/json',
+          Cookie: `accessToken=${validAccessToken.value}`
+        },
+        body: { name: newName },
+        onResponse: ({ response }) => {
+          expect(response.status).toBe(200)
+          expect(response._data.name).toBe(newName)
+        }
+      })
+    })
+
+    it('returns 404 when access token is not provided', async () => {
+      await $fetch('/change-name', {
+        baseURL: 'http://localhost:3000',
+        method: 'PUT',
+        headers: { Accept: 'application/json' },
+        ignoreResponseError: true,
+        body: { name: 'NewName' },
+        onResponse: ({ response }) => {
+          expect(response.status).toBe(404)
+          expect(response._data).toMatchObject({ message: 'Access token not found!' })
+        }
+      })
     })
   })
 })
