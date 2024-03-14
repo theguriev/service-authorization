@@ -468,6 +468,62 @@
             }
           }
         }
+      },
+      "/change-name": {
+        "put": {
+          "summary": "Change user name",
+          "parameters": [
+            {
+              "name": "accessToken",
+              "in": "cookie",
+              "required": true,
+              "schema": {
+                "type": "string"
+              },
+              "example": "accessToken=your_access_token_here",
+              "description": "Access token cookie"
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "New name for the user"
+                    }
+                  },
+                  "required": ["name"]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "User name changed successfully"
+            },
+            "404": {
+              "description": "Access token not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "message": {
+                        "type": "string",
+                        "description": "Error message"
+                      }
+                    },
+                    "required": ["message"]
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
