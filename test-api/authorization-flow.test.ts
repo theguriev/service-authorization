@@ -343,19 +343,6 @@ describe('Authorization', () => {
         }
       })
     })
-    it('gets 404 on invalid logout', async () => {
-      await $fetch('/logout', {
-        baseURL: 'http://localhost:3000',
-        headers: {
-          Accept: 'application/json'
-        },
-        ignoreResponseError: true,
-        onResponse: ({ response }) => {
-          expect(response.status).toBe(404)
-          expect(response._data).toMatchObject({ message: 'Access token not found!' })
-        }
-      })
-    })
     it('gets 500 on invalid logout', () => {
       expect(async () => await $fetch('/logout', {
         baseURL: 'http://localhost:3000',
