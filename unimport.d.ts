@@ -6,6 +6,7 @@ declare global {
   const describe: typeof import('vitest')['describe']
   const expect: typeof import('vitest')['expect']
   const extractSetCookie: typeof import('/Users/eugen/work/service-authorization/utils/extractSetCookie')['default']
+  const getUserId: typeof import('/Users/eugen/work/service-authorization/utils/getUserId')['default']
   const issueAccessToken: typeof import('/Users/eugen/work/service-authorization/utils/issueAccessToken')['default']
   const issueRefreshToken: typeof import('/Users/eugen/work/service-authorization/utils/issueRefreshToken')['default']
   const it: typeof import('vitest')['it']

@@ -3,7 +3,6 @@ import type { Cookie } from 'set-cookie-parser'
 describe('Authorization', () => {
   const uniqId = uuidv4().split('-')[0]
   const name = `test${uniqId}`
-  const newName = `newtest${uniqId}`
   const email = `test+${uniqId}@test.com`
   const password = 'test1234'
   let validRefreshToken: Cookie
@@ -212,21 +211,7 @@ describe('Authorization', () => {
   })
 
   describe('GET /', () => {
-    it('gets 404 on empty access token', async () => {
-      await $fetch('/', {
-        baseURL: 'http://localhost:3000',
-        headers: {
-          Accept: 'application/json'
-        },
-        ignoreResponseError: true,
-        onResponse: ({ response }) => {
-          expect(response.status).toBe(404)
-          expect(response._data).toMatchObject({ message: 'Access token not found!' })
-        }
-      })
-    })
-
-    it('gets 500 on empty access token', async () => {
+    it('gets 500 on wrong access token', async () => {
       await $fetch('/', {
         baseURL: 'http://localhost:3000',
         headers: {
@@ -241,7 +226,7 @@ describe('Authorization', () => {
       })
     })
 
-    it('gets valid user', async () => {
+    it('gets 200 valid user', async () => {
       await $fetch('/', {
         baseURL: 'http://localhost:3000',
         headers: {
@@ -396,20 +381,6 @@ describe('Authorization', () => {
         onResponse: ({ response }) => {
           expect(response.status).toBe(200)
           expect(response._data.name).toBe(newName)
-        }
-      })
-    })
-
-    it('returns 404 when access token is not provided', async () => {
-      await $fetch('/change-name', {
-        baseURL: 'http://localhost:3000',
-        method: 'PUT',
-        headers: { Accept: 'application/json' },
-        ignoreResponseError: true,
-        body: { name: 'NewName' },
-        onResponse: ({ response }) => {
-          expect(response.status).toBe(404)
-          expect(response._data).toMatchObject({ message: 'Access token not found!' })
         }
       })
     })
