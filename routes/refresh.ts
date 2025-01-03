@@ -16,8 +16,7 @@ export default eventHandler(async (event) => {
   const { save, deleteByUserId } = useTokens({
     event,
     userId,
-    email: user.email!,
-    name: user.name!
+    email: user.email!
   })
   await deleteByUserId()
   await save()
