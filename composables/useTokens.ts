@@ -6,20 +6,18 @@ const MINUTES_15 = 1000 * 60 * 15
 const useTokens = ({
   event,
   userId,
-  email,
-  name
+  email
 }: {
   event: H3Event<EventHandlerRequest>;
   userId: string;
   email: string;
-  name: string;
 }) => {
   const refreshToken = issueRefreshToken()
   const { secret } = useRuntimeConfig()
   const timestamp = Date.now()
   const expiresRefreshToken = new Date(timestamp + MONTH)
   const expiresAccessToken = new Date(timestamp + MINUTES_15)
-  const accessToken = issueAccessToken({ userId, email, name }, { secret })
+  const accessToken = issueAccessToken({ userId, email }, { secret })
 
   setCookie(event, 'refreshToken', refreshToken, {
     httpOnly: true,

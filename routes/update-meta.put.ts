@@ -1,11 +1,11 @@
 const requestBodySchema = z.object({
-  name: z.string().min(3).max(20)
+  meta: z.record(z.any())
 })
 
 export default eventHandler(async (event) => {
   const _id = await getUserId(event)
   const {
-    name
+    meta
   } = await zodValidateBody(event, requestBodySchema.parse)
   await ModelUser.updateOne(
     {
@@ -13,7 +13,7 @@ export default eventHandler(async (event) => {
     },
     {
       $set: {
-        name
+        meta
       }
     }
   )

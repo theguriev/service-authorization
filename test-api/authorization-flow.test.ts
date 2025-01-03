@@ -2,9 +2,11 @@ import type { Cookie } from 'set-cookie-parser'
 
 describe('Authorization', () => {
   const uniqId = uuidv4().split('-')[0]
-  const name = `test${uniqId}`
   const email = `test+${uniqId}@test.com`
   const password = 'test1234'
+  const firstName = 'Eugen'
+  const lastName = 'Guriev'
+  const meta = { firstName, lastName }
   let validRefreshToken: Cookie
   let validAccessToken: Cookie
 
@@ -15,7 +17,7 @@ describe('Authorization', () => {
         method: 'POST',
         ignoreResponseError: true,
         headers: { Accept: 'application/json' },
-        body: { name: '1', email: '1', password: '1', confirmation: '2' },
+        body: { email: '1', password: '1', confirmation: '2', meta },
         onResponse: ({ response }) => {
           expect(response.status).toBe(400)
           expect(response._data).toMatchObject({
@@ -24,15 +26,6 @@ describe('Authorization', () => {
             statusMessage: 'Validation Error',
             message: 'Validation Error',
             data: [
-              {
-                code: 'too_small',
-                minimum: 3,
-                type: 'string',
-                inclusive: true,
-                exact: false,
-                message: 'String must contain at least 3 character(s)',
-                path: ['name']
-              },
               {
                 validation: 'email',
                 code: 'invalid_string',
@@ -73,7 +66,7 @@ describe('Authorization', () => {
         method: 'POST',
         headers: { Accept: 'application/json' },
         ignoreResponseError: true,
-        body: { name, email, password, confirmation: 'bullshit' },
+        body: { email, password, confirmation: 'bullshit', meta },
         onResponse: ({ response }) => {
           expect(response.status).toBe(400)
           expect(response._data).toMatchObject({
@@ -98,7 +91,7 @@ describe('Authorization', () => {
         method: 'POST',
         ignoreResponseError: true,
         headers: { Accept: 'application/json' },
-        body: { name, email, password, confirmation: password },
+        body: { email, password, confirmation: password, meta },
         onResponse: ({ response }) => {
           expect(response.status).toBe(200)
           expect(response._data._id).toBeDefined()
@@ -116,21 +109,7 @@ describe('Authorization', () => {
         method: 'POST',
         headers: { Accept: 'application/json' },
         ignoreResponseError: true,
-        body: { name: 'randomname', email, password, confirmation: password },
-        onResponse: ({ response }) => {
-          expect(response.status).toBe(409)
-          expect(response._data).toMatchObject({ message: 'User already exists!' })
-        }
-      })
-    })
-
-    it('gets 409 on name already exist', async () => {
-      await $fetch('/registration', {
-        baseURL: 'http://localhost:3000',
-        method: 'POST',
-        headers: { Accept: 'application/json' },
-        ignoreResponseError: true,
-        body: { name, email: 'random@email.com', password, confirmation: password },
+        body: { email, password, confirmation: password, meta },
         onResponse: ({ response }) => {
           expect(response.status).toBe(409)
           expect(response._data).toMatchObject({ message: 'User already exists!' })
@@ -236,6 +215,8 @@ describe('Authorization', () => {
         onResponse: ({ response }) => {
           expect(response.status).toBe(200)
           expect(response._data.email).toBe(email)
+          expect(response._data.meta.firstName).toBe(firstName)
+          expect(response._data.meta.lastName).toBe(lastName)
         }
       })
     })
@@ -354,20 +335,20 @@ describe('Authorization', () => {
     })
   })
 
-  describe('PUT /change-name', () => {
+  describe('PUT /update-meta', () => {
     it('changes the user name', async () => {
-      const newName = 'NewName'
-      await $fetch('/change-name', {
+      await $fetch('/update-meta', {
         baseURL: 'http://localhost:3000',
         method: 'PUT',
         headers: {
           Accept: 'application/json',
           Cookie: `accessToken=${validAccessToken.value}`
         },
-        body: { name: newName },
+        body: { meta: { firstName: 'John', lastName: 'Doe' } },
         onResponse: ({ response }) => {
           expect(response.status).toBe(200)
-          expect(response._data.name).toBe(newName)
+          expect(response._data.meta.firstName).toBe('John')
+          expect(response._data.meta.lastName).toBe('Doe')
         }
       })
     })
