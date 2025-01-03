@@ -1,0 +1,22 @@
+name: Docker Publish
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: fregante/setup-git-user@v2
+      - name: Prepare git repo
+        run: |
+          echo "🚚 Prepare git repo"
+          npm i -g pnpm
+          pnpm i
+          pnpm release
+          echo "🚀 Push changes to remote repo"
+          git push --follow-tags -o ci.skip
