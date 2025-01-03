@@ -11,7 +11,7 @@
     "test": "pnpm run lint && pnpm run test:unit && pnpm run test:api",
     "test:unit": "NODE_OPTIONS=\"--enable-source-maps --experimental-vm-modules\" vitest run --coverage -c vitest.unit.ts",
     "test:api": "NODE_OPTIONS=\"--enable-source-maps --experimental-vm-modules\" vitest run -c vitest.api.ts",
-    "release": "npm run lint && changelogen --release"
+    "release": "git log --oneline -n 30 && changelogen --release"
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.7",
