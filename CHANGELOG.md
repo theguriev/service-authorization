@@ -1,6 +1,17 @@
 # Changelog
 
 
+## v0.0.4
+
+
+### 🚀 Enhancements
+
+- Update release script to include git log ([#8](https://github.com/theguriev/service-authorization/pull/8))
+
+### ❤️ Contributors
+
+- Eugen Guriev ([@theguriev](http://github.com/theguriev))
+
 ## v0.0.3
 
 ## v0.0.2
