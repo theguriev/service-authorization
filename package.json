@@ -11,7 +11,8 @@
     "test": "pnpm run lint && pnpm run test:unit && pnpm run test:api",
     "test:unit": "NODE_OPTIONS=\"--enable-source-maps --experimental-vm-modules\" vitest run --coverage -c vitest.unit.ts",
     "test:api": "NODE_OPTIONS=\"--enable-source-maps --experimental-vm-modules\" vitest run -c vitest.api.ts",
-    "release": "git log --oneline -n 30 && changelogen --release"
+    "release": "git log --oneline -n 30 && changelogen --release",
+    "copy-paste-check": "jscpd  --ignore 'node_modules,.nitro,.vscode,coverage,.output,.github' ."
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.7",
@@ -24,6 +25,7 @@
   "dependencies": {
     "@nuxtjs/eslint-config-typescript": "^12.1.0",
     "eslint": "^8.57.1",
+    "jscpd": "^4.0.5",
     "jsonwebtoken": "^9.0.2",
     "mongodb-memory-server": "^9.5.0",
     "mongoose": "^8.9.3",
