@@ -1,6 +1,17 @@
 # Changelog
 
 
+## v0.0.5
+
+
+### 🚀 Enhancements
+
+- Add copy-paste check script and jscpd dependency to package.json ([#9](https://github.com/theguriev/service-authorization/pull/9))
+
+### ❤️ Contributors
+
+- Eugen Guriev ([@theguriev](http://github.com/theguriev))
+
 ## v0.0.4
 
 
