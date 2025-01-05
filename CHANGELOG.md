@@ -1,6 +1,17 @@
 # Changelog
 
 
+## v0.0.6
+
+
+### 🚀 Enhancements
+
+- Extract common imports to constants for better maintainability ([#10](https://github.com/theguriev/service-authorization/pull/10))
+
+### ❤️ Contributors
+
+- Eugen Guriev ([@theguriev](http://github.com/theguriev))
+
 ## v0.0.5
 
 
