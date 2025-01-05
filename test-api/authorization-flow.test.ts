@@ -1,4 +1,20 @@
 import type { Cookie } from 'set-cookie-parser'
+import type { FetchResponse } from 'ofetch'
+
+const registrationValidationError = {
+  url: '/registration',
+  statusCode: 400,
+  statusMessage: 'Validation Error',
+  message: 'Validation Error'
+}
+
+const accessAndRefreshToBeDefined = (response: FetchResponse<any>) => {
+  const setCookie = extractSetCookie(response.headers)
+  const refreshTokenObj = setCookie.find(cookie => cookie.name === 'refreshToken')
+  const accessTokenObj = setCookie.find(cookie => cookie.name === 'accessToken')
+  expect(refreshTokenObj).toBeDefined()
+  expect(accessTokenObj).toBeDefined()
+}
 
 describe('Authorization', () => {
   const uniqId = uuidv4().split('-')[0]
@@ -21,10 +37,7 @@ describe('Authorization', () => {
         onResponse: ({ response }) => {
           expect(response.status).toBe(400)
           expect(response._data).toMatchObject({
-            url: '/registration',
-            statusCode: 400,
-            statusMessage: 'Validation Error',
-            message: 'Validation Error',
+            ...registrationValidationError,
             data: [
               {
                 validation: 'email',
@@ -70,10 +83,7 @@ describe('Authorization', () => {
         onResponse: ({ response }) => {
           expect(response.status).toBe(400)
           expect(response._data).toMatchObject({
-            url: '/registration',
-            statusCode: 400,
-            statusMessage: 'Validation Error',
-            message: 'Validation Error',
+            ...registrationValidationError,
             data: [
               {
                 code: 'custom',
@@ -95,11 +105,7 @@ describe('Authorization', () => {
         onResponse: ({ response }) => {
           expect(response.status).toBe(200)
           expect(response._data._id).toBeDefined()
-          const setCookie = extractSetCookie(response.headers)
-          const refreshTokenObj = setCookie.find(cookie => cookie.name === 'refreshToken')
-          const accessTokenObj = setCookie.find(cookie => cookie.name === 'accessToken')
-          expect(refreshTokenObj).toBeDefined()
-          expect(accessTokenObj).toBeDefined()
+          accessAndRefreshToBeDefined(response)
         }
       })
     })
@@ -243,11 +249,7 @@ describe('Authorization', () => {
         },
         onResponse: ({ response }) => {
           expect(response.status).toBe(200)
-          const setCookie = extractSetCookie(response.headers)
-          const refreshTokenObj = setCookie.find(cookie => cookie.name === 'refreshToken')
-          const accessTokenObj = setCookie.find(cookie => cookie.name === 'accessToken')
-          expect(refreshTokenObj).toBeDefined()
-          expect(accessTokenObj).toBeDefined()
+          accessAndRefreshToBeDefined(response)
         }
       })
     })
