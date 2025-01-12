@@ -1,6 +1,17 @@
 # Changelog
 
 
+## v0.0.8
+
+
+### 🚀 Enhancements
+
+- Make 'meta' field optional in user registration and update API documentation ([#12](https://github.com/theguriev/service-authorization/pull/12))
+
+### ❤️ Contributors
+
+- Eugen Guriev ([@theguriev](http://github.com/theguriev))
+
 ## v0.0.7
 
 
