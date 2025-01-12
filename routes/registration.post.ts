@@ -2,7 +2,7 @@ const requestBodySchema = z.object({
   email: z.string().email(),
   password: z.string().min(8).max(20),
   confirmation: z.string().min(8).max(20),
-  meta: z.record(z.any())
+  meta: z.record(z.any()).optional()
 }).refine(
   data => data.password === data.confirmation,
   {
@@ -24,7 +24,7 @@ export default eventHandler(async (event) => {
   if (userExist !== null) {
     throw createError({ message: 'User already exists!', status: 409 })
   }
-  const userDocument = new ModelUser({ email, password, meta, timestamp: Date.now() })
+  const userDocument = new ModelUser({ email, password, meta: meta || {}, timestamp: Date.now() })
   const userSaved = await userDocument.save()
   const userId = userSaved._id.toString()
   const { save } = useTokens({
